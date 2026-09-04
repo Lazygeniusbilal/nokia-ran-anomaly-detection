@@ -1,0 +1,6 @@
+COLUMNS:
+  5g_sa_data_session_success_rate: float
+  5g_sa_drb_accessibility: float
+  5g_sa_drop_rate: float
+  5g_sa_ng_accessibility: float
+  5g_sa_rrc_accessibility: float
