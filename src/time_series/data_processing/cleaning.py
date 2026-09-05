@@ -27,12 +27,12 @@ def select_data(data_path: Path) -> pd.DataFrame:
     df= pd.concat(dfs, ignore_index=True)
     return df
 
-def tower_selection(df: pd.DataFrame, cell_id: str)-> pd.DataFrame:
-    s= df[df['object_id'] == cell_id].sort_values('start_time_utc')
-    if s.empty:
-        raise ValueError(f"cell_id {cell_id!r} not found in df")
-    s= s.set_index('start_time_utc')
-    return s
+# def tower_selection(df: pd.DataFrame, cell_id: str)-> pd.DataFrame:
+#     s= df[df['object_id'] == cell_id].sort_values('start_time_utc')
+#     if s.empty:
+#         raise ValueError(f"cell_id {cell_id!r} not found in df")
+#     s= s.set_index('start_time_utc')
+#     return s
 
 def regularize(cell_df, kpi_cols: list):
     # first we will calculate a consistant 15 mins timeline
@@ -48,6 +48,13 @@ def regularize(cell_df, kpi_cols: list):
         
     return result
 
+def regularize_all(df: pd.DataFrame, kpi_cols: list[str]) -> pd.DataFrame:
+    """Apply regularize() to every cell in df, concat the results."""
+    all_cells = []
+    for cell_id, group in df.groupby('object_id'):
+        group = group.sort_values('start_time_utc').set_index('start_time_utc')
+        all_cells.append(regularize(group, kpi_cols))
+    return pd.concat(all_cells)
     
 
 if __name__ == "__main__": 

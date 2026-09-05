@@ -39,3 +39,5 @@ def masked_mse(recon: Tensor, x: Tensor, mask: Tensor) -> Tensor:
     """Reconstruction error counted only where mask=1 (real data)."""
     error = (recon - x) ** 2
     return (error * mask).sum() / mask.sum()
+
+obj= ConvAutoencoder()
