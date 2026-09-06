@@ -15,5 +15,3 @@ wheels/
 # env file
 .env
 
-# artifacts
-artifacts
