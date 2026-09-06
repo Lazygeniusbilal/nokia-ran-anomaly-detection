@@ -5,13 +5,15 @@ UI/UX layer only — the pipeline (cleaning, scaling, windowing, scoring, persis
 is imported and called as-is, never modified here.
 """
 
+import os
+
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 import torch
 
-from src.time_series.data_processing.cleaning import select_data, regularize_all, kpi_cols
+from src.time_series.data_processing.cleaning import kpi_cols
 from src.time_series.data_processing.scaling import apply_scalers
 from src.time_series.data_processing.windowing import make_windows
 from src.time_series.evaluation.persistance import load_artifacts
@@ -63,10 +65,24 @@ def get_model_and_scalers():
     return load_artifacts(save_dir="artifacts")
 
 
+REGULARIZED_DATA_PATH = "artifacts/regularized_data.parquet"
+
+
 @st.cache_data(show_spinner=False)
 def get_regularized_data():
-    df = select_data(data_path="data/unzip")
-    return regularize_all(df=df, kpi_cols=kpi_cols)
+    """Load the precomputed, regularized KPI data.
+
+    The raw parquet files (data/unzip/, ~9GB) aren't shipped to the deployed app —
+    run `python scripts/prepare_dashboard_data.py` locally to (re)generate this file,
+    then commit it, whenever the raw data changes.
+    """
+    if not os.path.exists(REGULARIZED_DATA_PATH):
+        st.error(
+            f"Missing `{REGULARIZED_DATA_PATH}`. Run `python scripts/prepare_dashboard_data.py` "
+            "locally and commit the resulting file before deploying."
+        )
+        st.stop()
+    return pd.read_parquet(REGULARIZED_DATA_PATH)
 
 
 def _kept_window_starts(masks: np.ndarray, T: int, window: int, stride: int) -> list[int]:
