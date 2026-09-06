@@ -10,6 +10,7 @@ from src.time_series.data_processing.windowing import make_windows
 from src.time_series.training.train import train_model
 # evaluation
 from src.time_series.evaluation.scoring import compute_scores, get_threshold, flag_anomalies
+from src.time_series.evaluation.persistance import save_artifacts
 
 
 def main():
@@ -52,6 +53,9 @@ def main():
 
     print(f"threshold: {threshold:.4f}")
     print(f"val windows flagged: {val_flags.sum()} / {len(val_flags)}")
+    
+    # save the model
+    save_artifacts(model= model, scalers= scalers, save_dir='artifacts')
 
 
 if __name__ == "__main__":

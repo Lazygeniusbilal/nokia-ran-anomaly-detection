@@ -57,11 +57,3 @@ def regularize_all(df: pd.DataFrame, kpi_cols: list[str]) -> pd.DataFrame:
     return pd.concat(all_cells)
     
 
-if __name__ == "__main__": 
-    df= select_data(data_path= 'data/unzip')
-    print(f"Shape of the data is: {df.shape} and number of unique object id's are {df['object_id'].nunique()}")
-    # print(df.isnull().sum())
-    s= tower_selection(df= df, cell_id='10048NCn011')
-    out = regularize(s, kpi_cols)
-    print(out['object_id'].isnull().sum())   # should be 0 now
-    # out.head(10)
