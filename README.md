@@ -140,8 +140,6 @@ uv run streamlit run app.py
 - Model + scaler persistence (save/load artifacts)
 - Standalone inference script for scoring new/held-out data
 - Streamlit dashboard: overview metrics, time-series view, anomaly table, and per-window drill-down (zoomed chart + per-KPI error breakdown)
-
-**Pending**
 - Cloud deployment on AWS (S3 for data/artifacts, SageMaker for training/serving, CloudWatch for monitoring)
 - Experiment tracking with MLflow
 - Hyperparameter tuning with Optuna
