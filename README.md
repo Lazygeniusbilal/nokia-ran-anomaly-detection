@@ -19,7 +19,7 @@ Unsupervised anomaly detection for Nokia 5G RAN KPI time-series, using a Conv1D 
 ## Demo
 
 ![Dashboard screenshot placeholder](docs/demo.gif)
-*(screenshot / GIF of the Streamlit dashboard — coming soon)*
+(https://nokia-ran-anomaly-detection-k24eyh2rxgobmqh9i5brvs.streamlit.app/)
 
 **Live demo:** [ADD LINK]
 
